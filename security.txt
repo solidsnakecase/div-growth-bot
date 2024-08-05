@@ -1,0 +1,20 @@
+# security.txt
+# For more information about the security.txt standard, see https://securitytxt.org/
+
+# Contact Information
+Contact: mailto:security@example.com
+
+# Encryption Key
+Encryption: https://example.com/pgp-key.txt
+
+# Disclosure Policy
+Policy: https://example.com/security-policy.html
+
+# Signature
+Signature: https://example.com/security.txt.sig
+
+# Acknowledgements
+Acknowledgements: https://example.com/acknowledgements.html
+
+# Preferred Languages
+Preferred-Languages: en, fr
