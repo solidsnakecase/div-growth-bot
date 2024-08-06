@@ -12,7 +12,7 @@ def main():
     if args.web:
         web.display_website()
     else:
-        logic.print_results()
+        logic.app_logic()
 
 if __name__ == "__main__":
     main()

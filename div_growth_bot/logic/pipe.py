@@ -22,6 +22,7 @@ def ticker_api_call(function, ticker, api_key):
     data = r.json()
 
     print(data) # Remove for Production
+    # return data # Production: Save to Parquet
 
 
 # Pipeline Functions
@@ -36,6 +37,7 @@ def active_stock_load():
         my_list = list(cr)
         for row in my_list:
             print(row) # Remove for Production
+            # return row # Production: Save to Parquet
 
 def extract_stock_tickers_by_age(csv_file_path, years_limit):
     tickers = []
@@ -50,44 +52,29 @@ def extract_stock_tickers_by_age(csv_file_path, years_limit):
                     tickers.append(row[0])
     return tickers
 
-def filter_excluded_tickers(config_file_path):
-    with open(config_file_path, mode='r') as file:
-        excluded_tickers = file.read().splitlines()
-    return excluded_tickers
-
 def filter_by_sector(sector):
-    result = []
-    return result
-
-# Example usage
-csv_file_path = 'path_to_your_file.csv'
-config_file_path = 'path_to_config_file.txt'
-excluded_tickers = filter_excluded_tickers(config_file_path)
-stock_tickers = extract_stock_tickers_by_age(csv_file_path, years_limit)
-print(stock_tickers)
-
-
-function = 'OVERVIEW' # Overview of the company
-ticker_api_call(function, 'AAPL', api_key)
+    filtered_by_sector = []
+    return filtered_by_sector
 
 # Main Function
 # MAINLY CHATGPT SUGGESTIONS, EDIT BEFORE PROD, FOR SUGGESTION ONLY
 def pipeline_execution():
     active_stock_load()
     stock_tickers = extract_stock_tickers_by_age(csv_file_path, years_limit)
-    excluded_tickers = filter_excluded_tickers(config_file_path)
+   
+    # !! SETUP CACHE HERE !!
 
     # For Tickers in Results
     # Filter Out Div and Save Companies who have Div
-    # If they have Div, save data to CSV/Parquet
     function = 'DIVIDENDS' # Dividend History of the company
     ticker_api_call(function, 'AAPL', api_key)
+    # If they have Div, save data to CSV/Parquet
 
     # Filter Out Div Growth (25 Years)
     # Calculate Dividend Growth Model
     # Price = Current Annual Dividend / (Desired Rate of Return - Expected Rate of Div Growth)
     for ticker in stock_tickers:
-        if ticker not in excluded_tickers:
+        if ticker not in tickers_to_exclude:
             function = 'DIVIDENDS' # Dividend History of the company
             ticker_api_call(function, ticker, api_key)
 
@@ -96,3 +83,4 @@ def pipeline_execution():
             ticker_api_call(function, ticker, api_key)
 
 # Debugging/Testing
+csv_file_path = 'path_to_your_file.csv'

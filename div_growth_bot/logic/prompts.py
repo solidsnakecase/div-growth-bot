@@ -1,14 +1,17 @@
 # Include ChatGPT Prompts Here:
 
+# !! Need to figure out how to pass in the stock ticker, stock name, 
+# and other variables into the prompt
+
 # Variables Needed:
-# {stock_P/E}
-# {stock_P/B}
-# {stock_div_growth_over_5}
-# {stock_debt_to_asset}
-# {stock_assets_liabilities}
-# {stock_growth_projections}
-# {stock_name}
-# {stock_ticker}
+# stock_ticker =
+# stock_name =
+# stock_div_growth_over_5 =
+# stock_P/E = 
+# stock_P/B = 
+# stock_debt_to_asset =
+# stock_assets_liabilities =
+# stock_growth_projections =
 
 CHATGPT_EXPLANATION_PROMPT = f'''
 I am using a stock picker bot that analyzes key statistics to provide suggestions for stocks with a history of dividend growth that intersect with signals for value investing.
