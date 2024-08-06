@@ -1,0 +1,27 @@
+# Use the official Python 3.12 image from the Docker Hub
+FROM python:3.12
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the application folder to the working directory
+COPY div_growth_bot /app/div_growth_bot
+
+# Copy the configuration and environment files to the working directory
+COPY .conf .env /app/
+
+# Copy the poetry.lock and pyproject.toml files to the working directory
+COPY div_growth_bot/pyproject.toml div_growth_bot/poetry.lock /app/div_growth_bot/
+
+# Install Poetry
+RUN pip install poetry
+
+# Install dependencies
+RUN poetry config virtualenvs.create false \
+    && poetry install --no-dev --no-interaction --no-ansi
+
+# Make port 80 available to the world outside this container
+EXPOSE 80
+
+# Run the application
+CMD ["python", "/app/div_growth_bot/main.py"]

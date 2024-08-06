@@ -18,6 +18,9 @@
 - Pipe Module
 - Analysis Module
 - Dockerize
+(Test the Following for the Web Option):
+> docker run -p 80:80 your_image_name --web
+
 - Exclusion Module
 - Selection Module
 - Chat Module

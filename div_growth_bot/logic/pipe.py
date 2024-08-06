@@ -2,6 +2,7 @@ import conf
 import requests
 import csv
 from datetime import datetime
+import polars
 
 # !! SET UP CACHE FOR ACTIVE STOCKS, INVALIDATE QUARTERLY/ANNUALLY !!
 
@@ -13,8 +14,22 @@ tickers_to_exclude = conf.tickers_to_exclude
 sectors_to_exclude = conf.sectors_to_exclude
 
 # Core Functions
-def create_parquet():
-    return
+def create_parquet(dataframe, file_name):
+    """
+    Creates a Parquet file from the given data.
+
+    Parameters:
+    data (polars.DataFrame): The data to be saved as a Parquet file.
+    file_name (str): The name of the output Parquet file.
+
+    Returns:
+    None
+    """
+    dataframe.write_parquet(file_name)
+
+# Example usage:
+# df = polars.DataFrame({'column1': [1, 2, 3], 'column2': [4, 5, 6]})
+# create_parquet(df, 'output.parquet')
 
 def ticker_api_call(function, ticker, api_key):
     url = f'https://www.alphavantage.co/query?function={function}&symbol={ticker}&apikey={api_key}'
@@ -50,7 +65,9 @@ def extract_stock_tickers_by_age(csv_file_path, years_limit):
                 age = (current_date - entry_date).days / 365.25
                 if age > years_limit:
                     tickers.append(row[0])
-    return tickers
+    return tickers # CHANGE THIS TO SAVE TO DATAFRAME, THEN PARQUET FUNCTION
+    dataframe =
+    create_parquet(dataframe, 'active_stocks_filtered_by_age.parquet')
 
 def sector_filter(sector):
     filtered_by_sector = []
@@ -62,7 +79,7 @@ def div_filter():
     # For Tickers in Results
     # Filter Out Div and Save Companies who have Div
     function = 'DIVIDENDS' # Dividend History of the company
-    ticker_api_call(function, 'AAPL', api_key)
+    div_filter = ticker_api_call(function, 'AAPL', api_key)
     # If they have Div, save data to CSV/Parquet
     return
 
@@ -72,16 +89,16 @@ def div_growth_filter():
     # Filter Out Div Growth (25 Years)
     # Calculate Dividend Growth Model
     # Price = Current Annual Dividend / (Desired Rate of Return - Expected Rate of Div Growth)
-    return
+    dataframe =
+    create_parquet(dataframe, 'filtered_by_div_growth.parquet')
 
 def ticker_enumeration():
     # For each Selected Stock, Gather Company Overview
     function = 'OVERVIEW' # Overview of the company
-    ticker_api_call(function, ticker, api_key)
-    return
+    ticker_enumeration = ticker_api_call(function, ticker, api_key)
+    create_parquet(ticker_enumeration, 'cleaned_dataset.parquet')
 
 # Main Function
-# MAINLY CHATGPT SUGGESTIONS, EDIT BEFORE PROD, FOR SUGGESTION ONLY
 def pipeline_execution():
     active_stock_load()
     extract_stock_tickers_by_age()
