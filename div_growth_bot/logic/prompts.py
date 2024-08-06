@@ -1,4 +1,9 @@
 # Include ChatGPT Prompts Here:
+import openai
+import conf
+
+# Set your OpenAI API key
+chatgpt_api_key = conf.chatgpt_api_key
 
 def chatgpt_explanation_prompt(stock_info):
     # Variables Schema Destructuring:
@@ -29,4 +34,22 @@ def chatgpt_explanation_prompt(stock_info):
 
     Please explain it to me in very concise and simple terminology.  Feel free to provide any additional information that you think is relevant.
     '''
+
+
+
+def get_chatgpt_response(prompt):
+    response = openai.Completion.create(
+        engine="text-davinci-003",  # or another model like "gpt-3.5-turbo"
+        prompt=prompt,
+        max_tokens=150,
+        n=1,
+        stop=None,
+        temperature=0.7,
+    )
+    return response.choices[0].text.strip()
+
+# Example usage
+prompt = "Write a Python function to calculate the factorial of a number."
+response = get_chatgpt_response(prompt)
+print(response)
 
