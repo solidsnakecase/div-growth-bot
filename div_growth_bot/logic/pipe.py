@@ -1,10 +1,19 @@
 import conf
 import requests
+
 import csv
-from datetime import datetime
+import os
+import time
+from datetime import datetime, timedelta
+
 import polars
 
-# !! SET UP CACHE FOR ACTIVE STOCKS, INVALIDATE QUARTERLY/ANNUALLY !!
+# Temp To Do:
+#   - Use dataframes to store data
+#   - Finish cache_active_stocks function
+#   - Finish filter_chain function
+#   - Finish ticker_enumeration function
+#   - Clean up code
 
 # Globals (Delete when moving to Main)
 api_key = conf.alpha_vantage_api_key
@@ -39,8 +48,8 @@ def ticker_api_call(function, ticker, api_key):
     print(data) # Remove for Production
     # return data # Production: Save to Parquet
 
-
 # Pipeline Functions
+
 def active_stock_load():
     # Custom API Endpoint Call
     CSV_URL = f'https://www.alphavantage.co/query?function=LISTING_STATUS&apikey={api_key}'
@@ -92,6 +101,34 @@ def div_growth_filter():
     dataframe =
     create_parquet(dataframe, 'filtered_by_div_growth.parquet')
 
+
+# Function Flow
+def cache_active_stocks(function, *args, **kwargs):
+    one_year_ago = datetime.now() - timedelta(days=365)
+    
+    # Check if file exists and is less than 1 year old, then cache if not
+    file_path = '/data/active_stocks_filtered_by_age.parquet'
+    if os.path.exists(file_path):
+        file_creation_time = datetime.fromtimestamp(os.path.getctime(file_path))
+        if file_creation_time > one_year_ago:
+            print(f"Using cached file: {file_path}")
+            return  # File is valid, no need to run the function
+    
+    # Fix Below Code
+
+    active_stock_load()
+    extract_stock_tickers_by_age(csv_file_path, years_limit)
+
+    # # File does not exist or is older than 1 year, run the function
+    # print(f"Running function and caching result to: {file_path}")
+    # result = function(*args, **kwargs)
+    # create_parquet(result, file_path)
+
+def filter_chain():
+    sector_filter()
+    div_filter()
+    div_growth_filter()
+
 def ticker_enumeration():
     # For each Selected Stock, Gather Company Overview
     function = 'OVERVIEW' # Overview of the company
@@ -100,16 +137,9 @@ def ticker_enumeration():
 
 # Main Function
 def pipeline_execution():
-    active_stock_load()
-    extract_stock_tickers_by_age()
-   
-    # !! SETUP CACHE HERE !!
-
-    sector_filter()
-    div_filter()
-    div_growth_filter()
+    cache_active_stocks()
+    filter_chain()
     ticker_enumeration()
-
 
 # Debugging/Testing
 print(pipeline_execution())

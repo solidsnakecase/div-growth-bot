@@ -31,3 +31,8 @@
 - News Option to Web
 - Budgeting Module
 - Sector Module
+
+### Housekeeping
+- Refactoring
+- Trim Imports
+- Testing/Error Handling
