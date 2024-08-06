@@ -1,4 +1,6 @@
 # Imports all Config/Env Variables
+# Helper Function to Load Config/Env Variables
+# Move Logic to Main after Completion
 
 from dotenv import load_dotenv
 import os

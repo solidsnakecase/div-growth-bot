@@ -5,7 +5,7 @@ from datetime import datetime
 
 # !! SET UP CACHE FOR ACTIVE STOCKS, INVALIDATE QUARTERLY/ANNUALLY !!
 
-# Globals
+# Globals (Delete when moving to Main)
 api_key = conf.alpha_vantage_api_key
 years_limit = conf.num_of_years_in_existence
 
@@ -52,35 +52,47 @@ def extract_stock_tickers_by_age(csv_file_path, years_limit):
                     tickers.append(row[0])
     return tickers
 
-def filter_by_sector(sector):
+def sector_filter(sector):
     filtered_by_sector = []
     return filtered_by_sector
 
-# Main Function
-# MAINLY CHATGPT SUGGESTIONS, EDIT BEFORE PROD, FOR SUGGESTION ONLY
-def pipeline_execution():
-    active_stock_load()
-    stock_tickers = extract_stock_tickers_by_age(csv_file_path, years_limit)
-   
-    # !! SETUP CACHE HERE !!
-
+def div_filter():
+    stock_tickers = # Extracted Tickers
+    for ticker in stock_tickers:
     # For Tickers in Results
     # Filter Out Div and Save Companies who have Div
     function = 'DIVIDENDS' # Dividend History of the company
     ticker_api_call(function, 'AAPL', api_key)
     # If they have Div, save data to CSV/Parquet
+    return
 
+def div_growth_filter():
+    stock_tickers = # Extracted Tickers
+    for ticker in stock_tickers:
     # Filter Out Div Growth (25 Years)
     # Calculate Dividend Growth Model
     # Price = Current Annual Dividend / (Desired Rate of Return - Expected Rate of Div Growth)
-    for ticker in stock_tickers:
-        if ticker not in tickers_to_exclude:
-            function = 'DIVIDENDS' # Dividend History of the company
-            ticker_api_call(function, ticker, api_key)
+    return
 
-        # For each Selected Stock, Gather Company Overview
-            function = 'OVERVIEW' # Overview of the company
-            ticker_api_call(function, ticker, api_key)
+def ticker_enumeration():
+    # For each Selected Stock, Gather Company Overview
+    function = 'OVERVIEW' # Overview of the company
+    ticker_api_call(function, ticker, api_key)
+    return
+
+# Main Function
+# MAINLY CHATGPT SUGGESTIONS, EDIT BEFORE PROD, FOR SUGGESTION ONLY
+def pipeline_execution():
+    active_stock_load()
+    extract_stock_tickers_by_age()
+   
+    # !! SETUP CACHE HERE !!
+
+    sector_filter()
+    div_filter()
+    div_growth_filter()
+    ticker_enumeration()
+
 
 # Debugging/Testing
-csv_file_path = 'path_to_your_file.csv'
+print(pipeline_execution())
