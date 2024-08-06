@@ -40,6 +40,7 @@ def app_logic():
 
     for picks in stock_decisions:
         pick_explanation = chatgpt_option()
+    # # Save to Final Parquet to be used in Web/Returned as answer
 
 
 app_logic()
