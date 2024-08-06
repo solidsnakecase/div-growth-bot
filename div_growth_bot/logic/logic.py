@@ -14,17 +14,18 @@ def app_logic():
     # Perform Analysis
 
     # # Include ChatGPT Explanation
-    # !! MAKE STRUCT OUT OF RESULTS WITH FOLLOWING SCHEMA !!
 
-    # ChatGPT Variables Schema:
-    # stock_ticker =
-    # stock_name =
-    # stock_div_growth_over_5 =
-    # stock_P/E = 
-    # stock_P/B = 
-    # stock_debt_to_asset =
-    # stock_assets_liabilities =
-    # stock_growth_projections =
+    # # ChatGPT Variables Schema Tuple:
+    # stock_info = (
+    #     stock_ticker,
+    #     stock_name,
+    #     stock_div_growth_over_5,
+    #     stock_PE,
+    #     stock_PB,
+    #     stock_debt_to_asset,
+    #     stock_assets_liabilities,
+    #     stock_growth_projections
+    # )
 
     if conf.chatgpt_explanation is True:
         # Call ChatGPT Function

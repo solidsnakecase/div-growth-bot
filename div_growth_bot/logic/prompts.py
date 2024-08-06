@@ -1,7 +1,7 @@
 # Include ChatGPT Prompts Here:
 
 def chatgpt_explanation_prompt(stock_info):
-    # Variables Schema:
+    # Variables Schema Destructuring:
     (
         stock_ticker,
         stock_name,

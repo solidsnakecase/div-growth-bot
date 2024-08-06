@@ -1,5 +1,7 @@
 # Dividend Growth Bot (Gordon Growth)
 
+**WIP: MVP in development**
+
 ## About
 
 **Not Limited to S&P 500 Stocks**
