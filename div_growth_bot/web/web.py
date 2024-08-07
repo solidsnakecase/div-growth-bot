@@ -1,8 +1,10 @@
+from logic import logic
+
 import webbrowser
 from fastapi import FastAPI
 import uvicorn
+
 import matplotlib.pyplot as plt
-from logic import logic
 
 app = FastAPI()
 
